@@ -22,3 +22,9 @@ jobs:
           config-file: doctum.config.php
           method: 'update'
           cli-args: '--output-format=github --no-ansi --no-progress -v'
+
+      - name: Commit doctum docs
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: master
+          commit_message: Update docs
