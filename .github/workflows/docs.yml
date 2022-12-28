@@ -1,0 +1,24 @@
+name: Document Generator
+on: [push]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          # Fetch entire history of repository to ensure relase date can be
+          # extracted from commit of the given tag.
+          fetch-depth: 0
+          # Checkout target branch of this release. Ensures that the CHANGELOG
+          # is not out of date.
+          ref: ${{ github.event.release.target_commitish }}
+
+      - name: Generate doctum docs
+        uses: sudo-bot/action-doctum@latest
+        with:
+          config-file: doctum.config.php
+          method: 'update'
+          cli-args: '--output-format=github --no-ansi --no-progress -v'
